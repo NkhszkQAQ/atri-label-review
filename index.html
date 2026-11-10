@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#14171b">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>亚托莉 · 台词标注</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header"><div class="header-inner">
+    <strong>亚托莉 · 台词标注</strong>
+    <div class="header-actions"><span id="saved" role="status" aria-live="polite"></span><button id="theme" type="button" aria-label="切换明暗模式">浅色</button></div>
+  </div></header>
+  <main id="main">
+    <section id="loading" class="empty"><h1>正在打开语料…</h1><p>首次打开需要下载一次，之后会保存在这个浏览器里。</p></section>
+    <section id="unlock" class="empty" hidden>
+      <h1>打开你的语料</h1><p>请使用聊天里给你的专属链接。也可以粘贴访问码：</p>
+      <form id="unlock-form"><label for="access-key">访问码</label><input id="access-key" type="password" autocomplete="off" spellcheck="false"><button class="primary" type="submit">打开语料</button></form>
+      <p id="unlock-error" class="error" role="alert"></p>
+    </section>
+    <section id="workspace" hidden>
+      <div class="progress-row"><span id="progress-label"></span><span id="case-number"></span></div>
+      <progress id="progress" max="1" value="0" aria-label="标注进度"></progress>
+      <div class="toolbar">
+        <label class="filter-label">查看 <select id="filter"><option value="all">全部</option><option value="pending">未标的</option><option value="reviewed">已标的</option></select></label>
+        <div class="tools"><button id="export" type="button">导出进度</button><button id="import" type="button">导入进度</button><input id="import-file" type="file" accept="application/json,.json" hidden></div>
+      </div>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+      <div class="work">
+        <article id="reading">
+          <section class="intro"><span id="stage" class="eyebrow"></span><h1>前面发生了什么</h1><p id="overview"></p></section>
+          <section class="context"><h2>接近这句话时</h2>
+            <details id="full-details"><summary id="full-summary">展开更早的前文</summary><div id="full-context"></div></details>
+            <div id="recent-context"></div>
+          </section>
+          <section class="target"><h2>只判断亚托莉这一句</h2><p id="target"></p></section>
+          <details id="following-details"><summary>后面紧接的内容 · 辅助理解</summary><div id="following"></div></details>
+          <p id="source" class="source"></p>
+        </article>
+        <section class="judgment" aria-labelledby="question-title">
+          <h2 id="question-title">她此刻是什么心情？</h2><p class="hint">可以多选。平静也算答案，不用硬找情绪。</p>
+          <div id="choices" class="choices" role="group" aria-labelledby="question-title"></div>
+          <label class="note-label" for="note">你的理解 <span>（可不填）</span></label>
+          <textarea id="note" rows="3" placeholder="比如：假哭、开玩笑但也有点认真…"></textarea>
+          <p class="storage-note">自动保存在这个浏览器。做一会儿就导出一份，换设备也能接着标。</p>
+        </section>
+      </div>
+      <footer class="bottom"><div class="bottom-inner"><button id="previous" type="button">上一条</button><form id="jump-form"><label for="jump">跳到</label><input id="jump" type="number" min="1" inputmode="numeric" aria-label="跳到第几条"><button type="submit">前往</button></form><button id="next" class="primary" type="button">保存并下一条</button></div></footer>
+    </section>
+  </main>
+  <script type="module" src="app.js"></script>
+</body></html>

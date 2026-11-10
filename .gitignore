@@ -1,0 +1,6 @@
+.DS_Store
+*.key
+*access*.json
+private/
+node_modules/
+*.tar.gz
