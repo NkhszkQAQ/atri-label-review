@@ -38,12 +38,16 @@ function renderChoices() {
 }
 function saveCurrent() {
   const id = dataset.cases[index].id;
+  const position = index;
   const answer = validateAnswer({id, selected: [...selected], note: $('note').value,
     updated_at: new Date().toISOString()}, new Set(dataset.cases.map(x => x.id)));
   answers.set(id, answer);
   const seq = ++change; $('saved').textContent = '保存中…';
   saveQueue = saveQueue.catch(() => {}).then(async () => {
-    await transaction(['answers'], tx => tx.objectStore('answers').put({key: `${dataset.id}|${id}`, dataset: dataset.id, answer}));
+    await transaction(['answers', 'prefs'], tx => {
+      tx.objectStore('answers').put({key: `${dataset.id}|${id}`, dataset: dataset.id, answer});
+      tx.objectStore('prefs').put({key: `position:${dataset.id}`, value: position});
+    });
     answers.set(id, answer); updateProgress();
     if (seq === change) $('saved').textContent = '已保存在本机';
   }).catch(error => { $('saved').textContent = '未保存'; announce('保存失败。请先导出进度，再检查浏览器存储：' + error.message, true); throw error; });
